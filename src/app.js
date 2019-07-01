@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import routes from './routes';
 
 import './database';
@@ -15,6 +16,11 @@ class App {
   /* metodo de criação dos middlewares */
   middlewares() {
     this.server.use(express.json()); /* seta o formado json para utilização */
+    /* inclui um metodo statico para visualização de imagem pela URL */
+    this.server.use(
+      '/files',
+      express.static(path.resolve(__dirname, '..', 'temp', 'uploads'))
+    );
   }
 
   /* metodo de criação dos routes */
