@@ -2,6 +2,7 @@ import 'dotenv/config';
 
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 import * as Sentry from '@sentry/node';
 import Youch from 'youch';
 
@@ -29,7 +30,12 @@ class App {
     /* faz a inicialização do sentry */
     this.server.use(Sentry.Handlers.requestHandler());
 
-    this.server.use(express.json()); /* seta o formado json para utilização */
+    /* libera a conexão com o front-end */
+    this.server.use(cors());
+
+    /* seta o formado json para utilização */
+    this.server.use(express.json());
+
     /* inclui um metodo statico para visualização de imagem pela URL */
     this.server.use(
       '/files',
